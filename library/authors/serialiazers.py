@@ -18,10 +18,10 @@ class BiographyModelSerializer(HyperlinkedModelSerializer):
         model = Biography
         fields = '__all__'
 
-class BookModelSerializer(ModelSerializer):
+class BookSerializer(ModelSerializer):
 
     # author = AuthorModelSerializer(many=True)
-    author = StringRelatedField(many=True)
+    # author = StringRelatedField(many=True)
     # StringRelatedField
 
     # def create(self, validated_data):

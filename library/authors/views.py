@@ -1,7 +1,7 @@
 from rest_framework.renderers import JSONRenderer
 from  rest_framework.viewsets import ModelViewSet
 from .models import Author,Book,Biography
-from .serialiazers import AuthorModelSerializer,BookModelSerializer,BiographyModelSerializer
+from .serialiazers import AuthorModelSerializer,BookSerializer,BiographyModelSerializer
 
 class AuthorModelViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
@@ -10,7 +10,7 @@ class AuthorModelViewSet(ModelViewSet):
 
 class BookModelViewSet(ModelViewSet):
     queryset = Book.objects.all()
-    serializer_class = BookModelSerializer
+    serializer_class = BookSerializer
 
 
 class BiographyModelViewSet(ModelViewSet):
