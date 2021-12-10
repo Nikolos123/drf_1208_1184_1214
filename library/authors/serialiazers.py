@@ -9,8 +9,14 @@ class AuthorModelSerializer(ModelSerializer):
     class Meta:
         model = Author
         fields = '__all__'
-        # fields = ('first_name','last_name')
-        # exclude =('birthday_year')
+
+class AuthorModelSerializerBase(ModelSerializer):
+
+    class Meta:
+        model = Author
+        fields = ('first_name','birthday_year')
+
+
 
 class BiographyModelSerializer(ModelSerializer):
 

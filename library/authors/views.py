@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAdminUser, BasePermission
 from rest_framework.renderers import JSONRenderer
 from  rest_framework.viewsets import ModelViewSet
 from .models import Author,Book,Biography
-from .serialiazers import AuthorModelSerializer,BookSerializer,BiographyModelSerializer
+from .serialiazers import AuthorModelSerializer, BookSerializer, BiographyModelSerializer, AuthorModelSerializerBase
 
 
 class StaffOnly(BasePermission):
@@ -10,10 +10,14 @@ class StaffOnly(BasePermission):
         return request.user.is_staff
 
 class AuthorModelViewSet(ModelViewSet):
-    # renderer_classes = [JSONRenderer]
-    # permission_classes = [StaffOnly]
+
     queryset = Author.objects.all()
-    serializer_class = AuthorModelSerializer
+    # serializer_class = AuthorModelSerializer
+
+    def get_serializer_class(self):
+        if self.request.version == 'v2':
+            return AuthorModelSerializerBase
+        return AuthorModelSerializer
 
 class BookModelViewSet(ModelViewSet):
     queryset = Book.objects.all()
