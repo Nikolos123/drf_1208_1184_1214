@@ -2,24 +2,33 @@ import React from "react";
 import App from "../App";
 
 
-const BookItem = ({book}) => {
+const BookItem = ({book,deleteBook}) => {
     return (
         <tr>
             <td>{book.id}</td>
             <td>{book.name}</td>
             <td>{book.author}</td>
+            <td>
+                <button onClick={() => deleteBook(book.id)} type='button'>
+                    Delete
+                </button>
+            </td>
         </tr>
     )
 }
 
-const BookList = ({books}) => {
+const BookList = ({books,deleteBook}) => {
 
     return (
         <table>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Author</th>
-            {books.map((book) => < BookItem book={book} /> )}
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>
+                </th>
+            </tr>
+            {books.map((book) => < BookItem book={book} deleteBook={deleteBook}/>)}
         </table>
     )
 }

@@ -20,6 +20,27 @@ class App extends React.Component {
             'token': '',
         }
     }
+    deleteBook(id){
+
+        const headers = this.get_headers()
+        console.log(headers)
+        console.log(id)
+        axios.delete(`http://127.0.0.1:8000/api/book/${id}`,{headers}).then(
+            response => {
+                // this.setState(
+                //     {
+                //         'books': this.state.books.filter((item) => item.id !==id)
+                //     }
+                // )
+                this.load_data()
+            }
+        ).catch(error => {
+            console.log(error)
+            this.setState({books:[]})
+        })
+
+
+    }
 
     set_token(token) {
         // console.log(token)
@@ -125,7 +146,10 @@ class App extends React.Component {
                     </nav>
                     <Switch>
                         <Route exact path='/' component={() => <AuthorList authors={this.state.authors}/>}/>
-                        <Route exact path='/books' component={() => <BookList books={this.state.books}/>}/>
+                        <Route exact path='/books' component={() => <BookList books={this.state.books}
+                                                                              deleteBook={(id) => this.deleteBook(id)}/>}/>
+
+
                         <Route exact path='/login' component={() => <LoginForm
                             get_token={(username, password) => this.get_token(username, password)}/>}/>
                         <Route path='/author/:id'>
