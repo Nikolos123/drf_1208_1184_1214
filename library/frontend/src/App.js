@@ -9,7 +9,7 @@ import BookList from "./components/Book";
 import NotFound404 from "./components/NotFound404";
 import BookListAuthor from "./components/BooksAuthor";
 import LoginForm from "./components/LoginForm";
-
+import BookForm from "./components/BookForm";
 
 class App extends React.Component {
     constructor(props) {
@@ -20,6 +20,33 @@ class App extends React.Component {
             'token': '',
         }
     }
+
+
+     createBook(name,author){
+        const headers = this.get_headers()
+        const data = {name:name,author:author}
+        axios.post(`http://127.0.0.1:8000/api/book/`,data,{headers}).then(
+            response => {
+
+                // let new_book = response.data
+                // const  author = this.state.authors.filter((item) => item.id === new_book.author)[0]
+                // new_book.author = author
+                // this.setState({books: [...this.setState.books,new_book]})
+                //
+
+                this.load_data()
+            }
+        ).catch(error => {
+            console.log(error)
+            this.setState({books:[]})
+        })
+
+
+    }
+
+
+
+
     deleteBook(id){
 
         const headers = this.get_headers()
@@ -66,6 +93,7 @@ class App extends React.Component {
 
     get_token(username, password) {
         const data = {username: username, password: password}
+        console.log(data)
         axios.post('http://127.0.0.1:8000/api-token-auth/', data).then(
             response => {
                 this.set_token(response.data['token'])
@@ -148,7 +176,8 @@ class App extends React.Component {
                         <Route exact path='/' component={() => <AuthorList authors={this.state.authors}/>}/>
                         <Route exact path='/books' component={() => <BookList books={this.state.books}
                                                                               deleteBook={(id) => this.deleteBook(id)}/>}/>
-
+                         <Route exact path='/books/create' component={() =>
+                             <BookForm authors={this.state.authors} createBook={(name,author) => this.createBook(name,author)}/>}/>
 
                         <Route exact path='/login' component={() => <LoginForm
                             get_token={(username, password) => this.get_token(username, password)}/>}/>

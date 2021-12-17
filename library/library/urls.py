@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
@@ -55,6 +56,8 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger')),
     path('redoc/', schema_view.with_ui('redoc')),
     path('swagger/<str:format>/', schema_view.without_ui()),
+
+    path('', TemplateView.as_view(template_name='index.html')),
     # path('api/<str:version>/users/', UserListAPIView.as_view()),
 
     # path('api/users/v1', include('userapp.urls',namespace='v1')),
